@@ -101,17 +101,3 @@ layer {
 }
 
 
-layer {
-	name: "ip2"
-	type: "InnerProduct"
-	bottom: "relu3"
-	top: "ip2"
-	param {lr_mult:1}
-	param {lr_mult:2}
-	inner_product_param {
-		num_output: 2
-		weight_filler {type: "xavier"}
-		bias_filler {type: "constant"}
-	}
-}
-
