@@ -1,0 +1,15 @@
+% test.m
+
+clear;close all;clc
+
+load('mnist.mat');
+
+test_img = (test_img-0.5)./2;
+test_img = reshape(test_img, 28, 28, []);
+
+solver = caffe.Solver('ipsolver.prototxt');
+solver.net.copy_from('tmp.caffemodel');
+
+for ii = 1:10000
+    
+end
