@@ -39,7 +39,7 @@ layer {
 	name: "pre_conv_bn"
 	type: "BatchNorm"
 	batch_norm_param {
-		use_global_stats: false
+		use_global_stats: true
 		eps : 0.00001
 	}
 }
@@ -95,7 +95,7 @@ layer {
 	name: "bn_1_1_"
 	type: "BatchNorm"
 	batch_norm_param {
-		use_global_stats: false
+		use_global_stats: true
 		eps : 0.00001
 	}
 }
@@ -149,7 +149,7 @@ layer {
 	name: "bn_1_2_"
 	type: "BatchNorm"
 	batch_norm_param {
-		use_global_stats: false
+		use_global_stats: true
 		eps : 0.00001
 	}
 }
@@ -200,7 +200,7 @@ layer {
 	name: "bn_1_3_"
 	type: "BatchNorm"
 	batch_norm_param {
-		use_global_stats: false
+		use_global_stats: true
 		eps : 0.00001
 	}
 }
@@ -265,7 +265,7 @@ layer {
 	name: "bn_2_1_"
 	type: "BatchNorm"
 	batch_norm_param {
-		use_global_stats: false
+		use_global_stats: true
 		eps : 0.00001
 	}
 }
@@ -318,7 +318,7 @@ layer {
 	name: "bn_2_2_"
 	type: "BatchNorm"
 	batch_norm_param {
-		use_global_stats: false
+		use_global_stats: true
 		eps : 0.00001
 	}
 }
@@ -371,7 +371,7 @@ layer {
 	name: "bn_2_3_"
 	type: "BatchNorm"
 	batch_norm_param {
-		use_global_stats: false
+		use_global_stats: true
 		eps : 0.00001
 	}
 }
@@ -436,7 +436,7 @@ layer {
 	name: "bn_3_1_"
 	type: "BatchNorm"
 	batch_norm_param {
-		use_global_stats: false
+		use_global_stats: true
 		eps : 0.00001
 	}
 }
@@ -489,7 +489,7 @@ layer {
 	name: "bn_3_2_"
 	type: "BatchNorm"
 	batch_norm_param {
-		use_global_stats: false
+		use_global_stats: true
 		eps : 0.00001
 	}
 }
@@ -540,7 +540,7 @@ layer {
 	name: "bn_3_3_"
 	type: "BatchNorm"
 	batch_norm_param {
-		use_global_stats: false
+		use_global_stats: true
 		eps : 0.00001
 	}
 }
@@ -600,7 +600,7 @@ layer {
 	name: "bn_ip_"
 	type: "BatchNorm"
 	batch_norm_param {
-		use_global_stats: false
+		use_global_stats: true
 		eps : 0.00001
 	}
 }

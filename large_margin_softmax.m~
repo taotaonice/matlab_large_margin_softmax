@@ -5,7 +5,7 @@ function [loss, dw, dx] = large_margin_softmax(x, w, label)
     % x:1024xn  w:1024x10
     m = 2;
     outputdim = 10;
-    batch_size = 32;
+    batch_size = 20;
     dw = zeros(size(w));
     dx = zeros(size(x));
     xnorm = sqrt(sum(x.^2, 1)); % 1xn
@@ -24,7 +24,7 @@ function [loss, dw, dx] = large_margin_softmax(x, w, label)
     loss = -log(loss+1e-8).*label';
     loss = sum(loss(:)) ./ batch_size;
     
-
+    if isnan(lo)
     %dl/df
     dldf = -(s./(exp(f)+s)).*label';
 

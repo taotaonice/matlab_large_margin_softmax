@@ -12,7 +12,7 @@ train_img = reshape(train_img, 28, 28, []);
 
 rng('shuffle');
 
-batch_size = 32;
+batch_size = 20;
 max_iter = 30000;
 lr_rate = 0.00003;
 gamma = 0.0003;
@@ -23,7 +23,7 @@ caffe.set_mode_gpu
 caffe.set_device(0)
 
 solver = caffe.Solver('ipsolver.prototxt');
-w = rand(512, 10)./100;
+w = rand(1024, 10)./100;
 
 figure(1);
 hold on
@@ -32,7 +32,7 @@ for ii = 1:max_iter
     inputs = processinputs(train_img, train_label, batch_size);
     solver.net.forward({inputs.batch_img});
     label = inputs.batch_label;
-    x = solver.net.blobs('bn_ip').get_data();
+    x = solver.net.blobs('feat').get_data();
     
     [loss, dw, dx] = large_margin_softmax(x, w, label);
     
@@ -43,7 +43,7 @@ for ii = 1:max_iter
     end
     rate_now = lr_rate*(1+ii*gamma).^(-power);
     w = w - dw*rate_now;
-    solver.net.blobs('bn_ip').set_diff(dx);
+    solver.net.blobs('feat').set_diff(dx);
     solver.net.backward_prefilled();
     solver.update(single(rate_now));
 end
