@@ -7,16 +7,20 @@ dbstop if error
 
 load('mnist.mat');
 
-train_img = (train_img-0.5)./2;
+train_img = (train_img-0.5).*2;
 train_img = reshape(train_img, 28, 28, []);
 
 rng('shuffle');
 
 batch_size = 20;
 max_iter = 50000;
-lr_rate = 0.003;
+lr_rate = 0.01;
 gamma = 0.0003;
 power = 0.75;
+
+caffe.reset_all
+caffe.set_mode_gpu
+caffe.set_device(0)
 
 solver = caffe.Solver('ipsolver.prototxt');
 w = rand(1024, 10)./100;
@@ -30,14 +34,17 @@ for ii = 1:max_iter
     label = inputs.batch_label;
     x = solver.net.blobs('relu3').get_data();
     [loss, dw, dx] = large_margin_softmax(x, w, label);
-    if mod(ii, 10) == 0
+    if mod(ii, 100) == 0
         fprintf('%d / %d loss: %g \n', ii, max_iter, loss);
         plot(ii, loss, 'rx');
         pause(0.0001);
     end
     rate_now = lr_rate*(1+ii*gamma).^(-power);
-    w = w - dw*rate_now;
+    w = w + dw*rate_now;
     solver.net.blobs('relu3').set_diff(dx);
     solver.net.backward_prefilled();
-    solver.update(single(rate_now));
+    %solver.update(single(rate_now));
 end
+
+save('w.mat','w');
+solver.net.save('tmp.caffemodel');

@@ -7,7 +7,6 @@ function [loss, dw, dx] = large_margin_softmax(x, w, label)
     batch_size = 20;
     dw = zeros(size(w));
     dx = zeros(size(x));
-    
     xnorm = sqrt(sum(x.^2, 1)); % 1xn
     wnorm = sqrt(sum(w.^2, 1)); % 1x10
     theta = (w'*x)./(wnorm'*xnorm); % 10xn
@@ -21,14 +20,14 @@ function [loss, dw, dx] = large_margin_softmax(x, w, label)
     s = s - exp(w'*x);
     loss = exp(f)./(exp(f) + s); % 10xn
     loss = -log(loss).*label';
-    loss = sum(loss(:)) ./ size(w, 2);
+    loss = sum(loss(:)) ./ batch_size;
     
     %dl/df
-    dldf = s./(f+s).^2;
-    
+    dldf = s.*exp(f)./(exp(f)+s).^2;
+
     for ii = 1:outputdim
         for jj = 1:batch_size
-            if label(jj, ii) == 0
+            if label(jj, ii) < 0.5
                 continue;
             end
             kk = k(ii, jj);
@@ -47,7 +46,6 @@ function [loss, dw, dx] = large_margin_softmax(x, w, label)
         end
     end
     
-    dx = dx./size(x, 2);
-    dw = dw./size(x, 2);
-    
+    dx = dx./batch_size;
+    dw = dw./batch_size;
 end

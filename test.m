@@ -2,10 +2,15 @@
 
 clear;close all;clc
 
+caffe.reset_all
+caffe.set_mode_gpu
+caffe.set_device(0)
+
+
 load('mnist.mat');
 load('w.mat');
 
-test_img = (test_img-0.5)./2;
+test_img = (test_img-0.5).*2;
 test_img = reshape(test_img, 28, 28, []);
 
 solver = caffe.Solver('ipsolver.prototxt');
@@ -26,7 +31,12 @@ for ii = 1:test_size
     f = (-1).^k.*2.*(w'*x).^2./(wnorm'*xnorm) - ...
         (2.*k+(-1).^k).*(wnorm'*xnorm); % 10xn
     
-    [~, ind] = max(f);
+    s = sum(exp(w'*x), 1);
+    s = repmat(s, 10, 1); % 10xn
+    s = s - exp(w'*x);
+    loss = exp(f)./(exp(f) + s); % 10xn
+    
+    [~, ind] = max(loss);
     if ind == label+1
         right = right+1;
     end
